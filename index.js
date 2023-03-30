@@ -4,6 +4,7 @@ const {
   maskSensitiveValues,
   getRequestDuration,
   generateTrebllePayload,
+  getResponsePayload,
 } = require('@treblle/utils')
 
 const { version: sdkVersion } = require('./package.json')
@@ -36,27 +37,13 @@ function treblle({
 
     const protocol = `${ctx.request.protocol}/${ctx.req.httpVersion}`
 
-    let originalResponseBody = ctx.body
-    let maskedResponseBody
-    try {
-      if (Buffer.isBuffer(originalResponseBody)) {
-        originalResponseBody = originalResponseBody.toString('utf8')
-      }
-      if (typeof originalResponseBody === 'string') {
-        let parsedResponseBody = JSON.parse(originalResponseBody)
-        maskedResponseBody = maskSensitiveValues(parsedResponseBody, fieldsToMask)
-      } else if (typeof originalResponseBody === 'object') {
-        maskedResponseBody = maskSensitiveValues(originalResponseBody, fieldsToMask)
-      }
-    } catch (error) {
-      // if we can't parse the body we'll leave it empty and set an error
-      errors.push({
-        source: 'onShutdown',
-        type: 'INVALID_JSON',
-        message: 'Invalid JSON format',
-        file: null,
-        line: null,
-      })
+    const { payload: maskedResponseBody, error: invalidJSONError } = getResponsePayload(
+      ctx.body,
+      fieldsToMask
+    )
+
+    if (invalidJSONError) {
+      errors.push(invalidJSONError)
     }
 
     const trebllePayload = generateTrebllePayload(
