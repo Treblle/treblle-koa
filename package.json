@@ -31,6 +31,6 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
-    "@treblle/utils": "^0.1.9"
+    "@treblle/utils": "^0.1.10"
   }
 }
