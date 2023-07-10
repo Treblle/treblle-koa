@@ -1,6 +1,6 @@
 {
   "name": "@treblle/koa",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "The official Treblle SDK for Koa",
   "main": "index.js",
   "scripts": {
@@ -18,10 +18,10 @@
   "author": "Kelvin Omereshone<kelvin@treblle.com>",
   "license": "MIT",
   "devDependencies": {
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.3.1",
     "husky": "^8.0.3",
-    "koa": "^2.14.1",
-    "lint-staged": "^13.2.0",
+    "koa": "^2.14.2",
+    "lint-staged": "^13.2.3",
     "prettier": "2.8.5"
   },
   "peerDependencies": {
@@ -31,6 +31,6 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
-    "@treblle/utils": "^0.1.12"
+    "@treblle/utils": "^0.1.13"
   }
 }
